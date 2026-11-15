@@ -105,8 +105,6 @@ function renderHome() {
 
         <div class="hero-content">
           <p class="eyebrow">
-            <span class="status-dot"></span>
-            NASA SPACE APPS CHALLENGE 2026
           </p>
 
           <h1>
@@ -128,9 +126,7 @@ function renderHome() {
         </div>
 
         <div class="hero-footer">
-          <span>BEYOND EARTH</span>
           <span>THE STORY CONTINUES ↓</span>
-          <span>29°N · DEEP SPACE</span>
         </div>
 
         <div class="hero-index">L / 001</div>
