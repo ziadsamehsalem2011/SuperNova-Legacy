@@ -147,21 +147,25 @@ function renderHome() {
         </div>
 
         <div class="world-cards">
+
           <a href="#moon" class="world-card moon-card">
+            <div class="planet moon-planet"></div>
+
             <div class="card-content">
-              <span class="card-number">01 / THE MOON</span>
               <h3>THE<br />MOON</h3>
               <span class="card-link">EXPLORE LUNAR LEGACY ↗</span>
             </div>
           </a>
 
           <a href="#mars" class="world-card mars-card">
+            <div class="planet mars-planet"></div>
+
             <div class="card-content">
-              <span class="card-number">02 / THE RED PLANET</span>
-              <h3>MARS</h3>
+              <h3>THE<br />MARS</h3>
               <span class="card-link">EXPLORE MARTIAN LEGACY ↗</span>
             </div>
           </a>
+
         </div>
       </section>
 
@@ -468,41 +472,33 @@ function renderStory() {
 // ==========================================
 
 function navigate() {
-  const route = window.location.hash.replace('#', '');
+  const route = window.location.hash.slice(1);
 
-  if (route === 'moon' || route === 'mars') {
-    renderWorld(route);
-  } else if (route === 'apollo-retroreflector') {
-    renderStory();
-  } else {
+  const pageRoutes = {
+    moon: () => renderWorld('moon'),
+    mars: () => renderWorld('mars'),
+    'apollo-retroreflector': () => renderStory(),
+  };
+
+  if (pageRoutes[route]) {
+    pageRoutes[route]();
+  } else if (!route || route === 'home') {
     renderHome();
+  } else {
+    const currentSection = app.querySelector(`[id="${route}"]`);
+
+    if (currentSection) {
+      return;
+    }
+
+    renderHome();
+
+    requestAnimationFrame(() => {
+      const targetSection = app.querySelector(`[id="${route}"]`);
+      targetSection?.scrollIntoView({ behavior: 'smooth' });
+    });
   }
 }
-
-// ==========================================
-// EQUIPMENT CARD INTERACTION
-// ==========================================
-
-app.addEventListener('click', (event) => {
-  const card = event.target.closest('[data-story]');
-
-  if (!card) return;
-
-  window.location.hash = card.dataset.story;
-});
-
-// Keyboard accessibility
-app.addEventListener('keydown', (event) => {
-  const card = event.target.closest('[data-story]');
-
-  if (
-    card &&
-    (event.key === 'Enter' || event.key === ' ')
-  ) {
-    event.preventDefault();
-    window.location.hash = card.dataset.story;
-  }
-});
 
 // ==========================================
 // TIMELINE INTERACTION
@@ -553,6 +549,22 @@ app.addEventListener('click', (event) => {
 
   app.querySelector('#stage-description').textContent =
     stage.description;
+});
+
+// ==========================================
+// EQUIPMENT CARD INTERACTION
+// ==========================================
+
+app.addEventListener('click', (event) => {
+  const card = event.target.closest('.equipment-card');
+
+  if (!card) return;
+
+  const story = card.dataset.story;
+
+  if (story) {
+    window.location.hash = story;
+  }
 });
 
 // ==========================================

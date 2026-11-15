@@ -1,4 +1,3 @@
-
 :root {
   font-family: 'DM Sans', sans-serif;
   color: #f5f3ed;
@@ -102,6 +101,11 @@ a {
   font-weight: 700;
   letter-spacing: 3px;
   margin-bottom: 30px;
+}
+
+.section-heading .eyebrow {
+  font-size: 15px;
+  letter-spacing: 4px;
 }
 
 .status-dot {
@@ -232,9 +236,11 @@ a {
 }
 
 .mars-card {
-  background-image:
-    linear-gradient(0deg, #080a0e 0%, transparent 75%),
-    url('https://d2pn8kiwq2w21t.cloudfront.net/original_images/jpegPIA16013.jpg');
+  background-image: linear-gradient(
+    0deg,
+    #080a0e 0%,
+    transparent 75%
+  );
 }
 
 .card-content {
@@ -1134,25 +1140,162 @@ footer .logo {
 
 
 /* ==========================================
-   PAGE TRANSITION
+   MOON VISIBILITY TEST
 ========================================== */
 
-#app {
-  animation: pageEnter 0.55s ease both;
+
+/* ==========================================
+   ROTATING MOON GLOBE
+========================================== */
+
+.moon-card {
+  background-image: linear-gradient(
+    0deg,
+    #080a0e 0%,
+    transparent 75%
+  );
 }
 
-@keyframes pageEnter {
+.moon-planet {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  right: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+
+  border-radius: 50%;
+  overflow: hidden;
+
+  background-image: url('/images/moon-texture.jpg');
+  background-size: 200% 100%;
+  background-position: 0% center;
+  background-repeat: no-repeat;
+
+  box-shadow:
+    inset -28px -8px 45px rgba(0, 0, 0, 0.75),
+    0 0 35px rgba(170, 170, 170, 0.12);
+
+  animation: moon-rotation 35s linear infinite;
+
+  z-index: 2;
+  pointer-events: none;
+}
+
+.moon-planet::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 32% 30%,
+      rgba(255, 255, 255, 0.08),
+      transparent 45%
+    ),
+    linear-gradient(
+      90deg,
+      transparent 35%,
+      rgba(0, 0, 0, 0.12) 65%,
+      rgba(0, 0, 0, 0.65) 100%
+    );
+
+  pointer-events: none;
+}
+
+@keyframes moon-rotation {
   from {
-    opacity: 0;
+    background-position: 0% center;
   }
 
   to {
-    opacity: 1;
+    background-position: 100% center;
+  }
+}
+
+.moon-card .card-content {
+  position: relative;
+  z-index: 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moon-planet {
+    animation: none;
+  }
+}
+
+
+/* ==========================================
+   ROTATING MARS GLOBE
+========================================== */
+
+.mars-planet {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  right: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+
+  border-radius: 50%;
+  overflow: hidden;
+
+  background-image: url('/images/mars-texture.jpg');
+  background-size: 200% 100%;
+  background-position: 0% center;
+  background-repeat: no-repeat;
+
+  box-shadow:
+    inset -28px -8px 45px rgba(0, 0, 0, 0.75),
+    0 0 35px rgba(190, 85, 45, 0.18);
+
+  animation: mars-rotation 42s linear infinite;
+
+  z-index: 2;
+  pointer-events: none;
+}
+
+.mars-planet::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 32% 30%,
+      rgba(255, 220, 190, 0.12),
+      transparent 45%
+    ),
+    linear-gradient(
+      90deg,
+      transparent 35%,
+      rgba(30, 10, 5, 0.12) 65%,
+      rgba(15, 5, 2, 0.7) 100%
+    );
+
+  pointer-events: none;
+}
+
+@keyframes mars-rotation {
+  from {
+    background-position: 0% center;
+  }
+
+  to {
+    background-position: 100% center;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #app {
+  .mars-planet {
     animation: none;
   }
+}
+
+
+.mars-card .card-content {
+  position: relative;
+  z-index: 3;
 }
