@@ -125,11 +125,6 @@ function renderHome() {
           </a>
         </div>
 
-        <div class="hero-footer">
-          <span>THE STORY CONTINUES ↓</span>
-        </div>
-
-        <div class="hero-index">L / 001</div>
       </section>
 
       <section class="worlds" id="worlds">
